@@ -51,6 +51,11 @@ const createAPIClient = (): AxiosInstance => {
   client.interceptors.response.use(
     (response: AxiosResponse) => {
       console.log(`[API Response] ${response.config.url} - Status: ${response.status}`);
+      // 調試：顯示 heat-ranking 的字段名稱
+      if (response.config.url?.includes('heat-ranking') && response.data?.data?.個股?.length > 0) {
+        const firstStock = response.data.data.個股[0];
+        console.log('[Debug] First stock fields:', firstStock.欄位);
+      }
       return response;
     },
     (error) => {
