@@ -81,34 +81,46 @@ export const StockListItem: React.FC<StockListItemProps> = ({
       {/* 動態欄位 */}
       {showExDividendDate ? (
         <>
-          {/* 最新配息: 除息日, 頻率 */}
+          {/* 最新配息: 除息日, 頻率, 股價, 殖利率 */}
           <Text style={styles.cell}>{exDividendDate}</Text>
           <Text style={styles.cell}>{frequency !== '--' ? frequency : '-'}</Text>
+          
+          {/* 股價與漲跌 */}
+          <View style={styles.priceCell}>
+            <Text style={[styles.price, { color: priceChangeColor }]}>
+              {currentPrice ? formatCurrency(currentPrice) : '--'}
+            </Text>
+            {priceChange !== undefined && priceChangePct !== undefined && (
+              <Text style={[styles.priceChange, { color: priceChangeColor }]}>
+                {formatPriceChange(priceChange, priceChangePct)}
+              </Text>
+            )}
+          </View>
+          
+          {/* 最後一欄: 殖利率 */}
+          <Text style={styles.cellLast}>{cashDividend}%</Text>
         </>
       ) : (
         <>
-          {/* 配最多: 殖利率, 評比 */}
+          {/* 配最多: 殖利率, 股價, 評比 */}
           <Text style={styles.cell}>{cashDividend}%</Text>
-          <Text style={styles.cell}>{recentDividend}</Text>
+          
+          {/* 股價與漲跌 */}
+          <View style={styles.priceCell}>
+            <Text style={[styles.price, { color: priceChangeColor }]}>
+              {currentPrice ? formatCurrency(currentPrice) : '--'}
+            </Text>
+            {priceChange !== undefined && priceChangePct !== undefined && (
+              <Text style={[styles.priceChange, { color: priceChangeColor }]}>
+                {formatPriceChange(priceChange, priceChangePct)}
+              </Text>
+            )}
+          </View>
+          
+          {/* 最後一欄: 評比 */}
+          <Text style={styles.cellLast}>{recentDividend}</Text>
         </>
       )}
-
-      {/* 股價與漲跌 */}
-      <View style={styles.priceCell}>
-        <Text style={[styles.price, { color: priceChangeColor }]}>
-          {currentPrice ? formatCurrency(currentPrice) : '--'}
-        </Text>
-        {priceChange !== undefined && priceChangePct !== undefined && (
-          <Text style={[styles.priceChange, { color: priceChangeColor }]}>
-            {formatPriceChange(priceChange, priceChangePct)}
-          </Text>
-        )}
-      </View>
-
-      {/* 最後一欄 */}
-      <Text style={styles.cellLast}>
-        {showExDividendDate ? cashDividend : recentDividend}
-      </Text>
     </TouchableOpacity>
   );
 };

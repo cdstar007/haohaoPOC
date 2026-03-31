@@ -51,7 +51,7 @@ const TABS: TabConfig[] = [
     key: 'highest',
     label: '配最多',
     categoryId: RANKING_CATEGORY.highestYield,
-    headers: ['排行', '股票', '殖利率', '評比', '股價', '評比'],
+    headers: ['排行', '股票', '殖利率', '股價', '評比'],
   },
 ];
 
