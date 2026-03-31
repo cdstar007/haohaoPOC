@@ -60,7 +60,7 @@ export const DividendScreen: React.FC = () => {
   const [tableSegment, setTableSegment] = useState<TableSegment>('yield');
 
   // 使用 Hook 載入資料
-  const { kLineData, yearlyDividend, exDividend, isLoading, error, refresh } = useDividendData(
+  const { kLineData, yearlyDividend, exDividend, summary, isLoading, error, refresh } = useDividendData(
     stockId,
     kLineConfig
   );
@@ -116,21 +116,21 @@ export const DividendScreen: React.FC = () => {
       {/* 個股摘要資訊列 */}
       <View style={styles.summaryRow}>
         <View style={styles.priceSection}>
-          <Text style={styles.currentPrice}>583.0</Text>
-          <Text style={styles.priceChange}>▼3.00（-0.51%）</Text>
+          <Text style={styles.currentPrice}>{stockId}</Text>
+          <Text style={styles.priceChange}>{stockName}</Text>
         </View>
         <View style={styles.dividendInfo}>
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>殖利率</Text>
-            <Text style={styles.infoValue}>10%</Text>
+            <Text style={styles.infoValue}>{summary?.yield ? `${summary.yield.toFixed(2)}%` : '--'}</Text>
           </View>
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>股利</Text>
-            <Text style={styles.infoValue}>8.5元</Text>
+            <Text style={styles.infoValue}>{summary?.cashDividend ? `${summary.cashDividend.toFixed(2)}元` : '--'}</Text>
           </View>
           <View style={styles.infoItem}>
             <Text style={styles.infoLabel}>頻率</Text>
-            <Text style={styles.infoValue}>季配</Text>
+            <Text style={styles.infoValue}>{summary?.frequency || '--'}</Text>
           </View>
         </View>
       </View>
