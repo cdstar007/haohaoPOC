@@ -38,12 +38,16 @@ export const StockListItem: React.FC<StockListItemProps> = ({
     return field?.value || '--';
   };
 
-  // 最新配息欄位: 除息日、頻率、現金股利
-  // 配最多欄位: 現金股利、頻率、最近股利
-  const exDividendDate = getFieldValue('除息日');
-  const frequency = getFieldValue('頻率');
-  const cashDividend = getFieldValue('現金股利');
-  const recentDividend = getFieldValue('最近股利');
+  // 最新配息欄位 (category_id=8): 除息交易日、股價、現金殖利率
+  // 配最多欄位 (category_id=7): 現金殖利率、股價、評比
+  const exDividendDateRaw = getFieldValue('除息交易日');
+  // 格式化日期: 20260331 -> 03/31
+  const exDividendDate = exDividendDateRaw !== '--' 
+    ? `${exDividendDateRaw.slice(4, 6)}/${exDividendDateRaw.slice(6, 8)}`
+    : '--';
+  const frequency = getFieldValue('頻率'); // API 可能沒有
+  const cashDividend = getFieldValue('現金股利') || getFieldValue('現金殖利率');
+  const recentDividend = getFieldValue('最近股利') || getFieldValue('評比');
 
   const priceChangeColor = getPriceChangeColor(priceChange || 0);
 
@@ -77,13 +81,15 @@ export const StockListItem: React.FC<StockListItemProps> = ({
       {/* 動態欄位 */}
       {showExDividendDate ? (
         <>
+          {/* 最新配息: 除息日, 頻率 */}
           <Text style={styles.cell}>{exDividendDate}</Text>
-          <Text style={styles.cell}>{frequency}</Text>
+          <Text style={styles.cell}>{frequency !== '--' ? frequency : '-'}</Text>
         </>
       ) : (
         <>
-          <Text style={styles.cell}>{cashDividend}</Text>
-          <Text style={styles.cell}>{frequency}</Text>
+          {/* 配最多: 殖利率, 評比 */}
+          <Text style={styles.cell}>{cashDividend}%</Text>
+          <Text style={styles.cell}>{recentDividend}</Text>
         </>
       )}
 

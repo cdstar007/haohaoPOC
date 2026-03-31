@@ -45,13 +45,13 @@ const TABS: TabConfig[] = [
     key: 'latest',
     label: '最新配息',
     categoryId: RANKING_CATEGORY.latestDividend,
-    headers: ['排行', '股票', '除息日', '頻率', '股價', '現金股利'],
+    headers: ['排行', '股票', '除息日', '頻率', '股價', '殖利率'],
   },
   {
     key: 'highest',
     label: '配最多',
     categoryId: RANKING_CATEGORY.highestYield,
-    headers: ['排行', '股票', '現金股利', '頻率', '股價', '最近股利'],
+    headers: ['排行', '股票', '殖利率', '評比', '股價', '評比'],
   },
 ];
 
